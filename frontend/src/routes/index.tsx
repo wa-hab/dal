@@ -273,7 +273,11 @@ function TransactionList() {
               <AddTransactionDialog />
 
               <Button
-                onClick={() => refetch()}
+                onClick={() =>
+                  refetch({
+                    force: true,
+                  })
+                }
                 disabled={isPending}
                 className="flex items-center justify-center bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 shadow-sm transition-all duration-200 w-full md:w-auto"
               >
