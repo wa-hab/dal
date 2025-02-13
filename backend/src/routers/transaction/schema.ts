@@ -1,7 +1,12 @@
 import { z } from "zod";
 
 export const transactionSchema = z.object({
-  amount: z.string(),
+  amount: z
+    .number()
+    .nonnegative()
+    .refine((val) => val > 0, {
+      message: "Amount must be greater than 0",
+    }),
   type: z.enum(["credit", "debit"]),
 });
 

@@ -20,6 +20,7 @@ export const createTransactionHandler = async (
 
     return sendResponse(res, transaction);
   } catch (err) {
+    console.error("Error creating transaction:", err);
     return sendGenericErrorResponse(res);
   }
 };
@@ -32,6 +33,7 @@ export const getTransactionsHandler = async (
     const transactions = await getTransactions();
     return sendResponse(res, transactions);
   } catch (err) {
+    console.error("Error getting transactions:", err);
     return sendGenericErrorResponse(res);
   }
 };
@@ -50,6 +52,7 @@ export const getTransactionByIdHandler = async (
 
     return sendResponse(res, transaction);
   } catch (err) {
+    console.error("Error getting transaction by id:", err);
     return sendGenericErrorResponse(res);
   }
 };
