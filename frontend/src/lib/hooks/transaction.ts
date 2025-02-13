@@ -1,12 +1,6 @@
 import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-
-export type Transaction = {
-  id: string;
-  amount: number;
-  type: "credit" | "debit";
-  timestamp: string;
-};
+import type { Transaction } from "../types";
 
 const transactionApi = {
   getAll: () => axios.get<{ data: Transaction[] }>("/transactions"),
