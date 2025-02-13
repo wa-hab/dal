@@ -27,6 +27,7 @@ import * as z from "zod";
 import { useState } from "react";
 import { Plus, Minus, RefreshCw } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useQueryClient } from "@tanstack/react-query";
 
 const formSchema = z.object({
   amount: z.string().min(1, "Amount is required"),
@@ -196,9 +197,10 @@ export const Route = createFileRoute("/")({
 });
 
 function TransactionList() {
-  const { data, isPending, refetch } = useTransactions();
+  const queryClient = useQueryClient();
+  const { data, isPending, isLoading } = useTransactions();
 
-  if (isPending) {
+  if (isLoading) {
     return (
       <div className="h-screen w-screen">
         <div className="max-w-4xl mx-auto p-4 md:p-8 h-full">
@@ -273,11 +275,11 @@ function TransactionList() {
               <AddTransactionDialog />
 
               <Button
-                onClick={() =>
-                  refetch({
-                    force: true,
-                  })
-                }
+                onClick={() => {
+                  queryClient.resetQueries({
+                    queryKey: ["transactions"],
+                  });
+                }}
                 disabled={isPending}
                 className="flex items-center justify-center bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 shadow-sm transition-all duration-200 w-full md:w-auto"
               >
