@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 export type Transaction = {
   id: string;
-  amount: string;
+  amount: number;
   type: "credit" | "debit";
   timestamp: string;
 };

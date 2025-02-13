@@ -30,7 +30,12 @@ import { cn } from "@/lib/utils";
 import { useQueryClient } from "@tanstack/react-query";
 
 const formSchema = z.object({
-  amount: z.string().min(1, "Amount is required"),
+  amount: z
+    .string()
+    .transform((val) => Number(val))
+    .refine((val) => val > 0, {
+      message: "Amount must be greater than 0",
+    }),
   type: z.enum(["credit", "debit"]),
 });
 
@@ -94,7 +99,7 @@ function AddTransactionDialog() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      amount: "",
+      amount: 0,
       type: "credit",
     },
   });
@@ -129,7 +134,7 @@ function AddTransactionDialog() {
                     <FormItem>
                       <FormLabel>Amount</FormLabel>
                       <FormControl>
-                        <Input type="number" placeholder="0.00" {...field} />
+                        <Input type="string" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
